@@ -1,0 +1,419 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+
+  /*this is the style for the map */
+  #map {
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+  }
+  
+  #map-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 2;
+    pointer-events: none; /* 确保滚动不会被图片挡住 */
+  }
+  
+
+
+   /*this is the style for the first header */
+  #header {
+    margin: auto;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    padding: 2vh 0vh 5vh 0vh;
+  }
+  
+   /*this is the style for each charpter, so the padding is the spacing between them */
+  #features {
+    padding-top: 80vh;
+    padding-bottom: 10vh;
+  }
+  @media (max-width: 750px) {
+    #features {
+      width: 90vw;
+      margin: 0 auto;
+    }
+  }
+  
+   /*this is the style for the footer,  minimum height */
+  #footer {
+    min-height: 2vh;
+    text-align: left;
+    line-height: 25px;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+  }
+  
+  #header h1 {/*大标题字体 */
+    font-weight: 800;
+    /*text-transform: uppercase;*/
+    font-family: "Cal Sans", sans-serif;
+    text-align: left;
+    margin: auto;
+    max-width: 45vw;
+    font-size: 2.6em;
+    letter-spacing: -0.02em;
+  }
+  #header h4 {/*大标题前面的小字字体 */
+    font-family: Times New Roman, Times, serif;
+    font-weight: 300;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    max-width: 45vw;
+    font-size: 1em;
+  }
+  #header p.byline {/*--没有对应上的字体-- */
+    font-weight: 100;
+    font-size: 1em;
+    margin: 1em auto 1em auto;
+    max-width: 45vw;
+  }
+  #header p {/*intro字体 */
+    font-family: Times New Roman, Times, serif;
+    font-weight: 400;
+    text-align: left;
+    font-size: 1.5em;
+    max-width: 700px;
+    max-width: 45vw;
+    margin: 1em auto 1em auto;
+  }
+  #features h3 {/*滚动小标题字体 */
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: "Merriweather", serif;
+    text-align: left;
+    max-width: 50vw;
+    font-size: 1.4em;
+  }
+  #features p {/*滚动正文字体 */
+    font-family: Times New Roman, Times, serif;
+    text-align: left;
+    font-size: 1.7em;
+    max-width: 50vw;
+    margin: 1em auto 1em auto;
+    line-height: 1.4em;
+  }
+  #features .imageCredit {/*图片来源字体 */
+    font-size: 1.2em;
+    margin-top: -5px;
+  }
+  #footer p {/*字体 */
+    font-family: Times New Roman, Times, serif;
+    font-size: 1.2em;
+    max-width: 600px;
+    padding: 0.75em 0em;
+    margin: 0px auto;
+  }
+
+  /* ----------------------------------------文本HIGHLIGHT---------------------------------------------*/
+  .highlightgrey {
+    background-color: #4f4f4f; /* 稳定的红色 */
+    color: white;              /* 白色字，和红底反差明显 */
+    padding: 0.05em 0.15em;       /* 上下轻微留白，左右多留一点 */
+    border-radius: 0px;         /* 稍微圆角一点 */
+    font-weight: bold;          /* 加粗，突出关键词 */
+    font-family: Times New Roman, Times, serif; /* 保持和正文一样的字体 */
+    font-size: 1em;             /* 继承当前段落的大小，不放大也不缩小 */
+  }
+  .highlightblack {
+    background-color: #101010; /* 稳定的红色 */
+    color: white;              /* 白色字，和红底反差明显 */
+    padding: 0.05em 0.15em;       /* 上下轻微留白，左右多留一点 */
+    border-radius: 0px;         /* 稍微圆角一点 */
+    font-weight: bold;          /* 加粗，突出关键词 */
+    font-family: Times New Roman, Times, serif; /* 保持和正文一样的字体 */
+    font-size: 1em;             /* 继承当前段落的大小，不放大也不缩小 */
+  }  
+  .highlightred {
+    background-color: #0060e6; /* 稳定的红色 */
+    color: white;              /* 白色字，和红底反差明显 */
+    padding: 0.05em 0.15em;       /* 上下轻微留白，左右多留一点 */
+    border-radius: 0px;         /* 稍微圆角一点 */
+    font-weight: bold;          /* 加粗，突出关键词 */
+    font-family: Times New Roman, Times, serif; /* 保持和正文一样的字体 */
+    font-size: 1em;             /* 继承当前段落的大小，不放大也不缩小 */
+  } 
+
+  .highlight-wrapper {
+    display: inline-block;
+    background: white !important;
+    padding: 0.05em 0.15em;
+    border-radius: 0px;
+  }
+  
+
+  /* ----------------------------------------对比滑动---------------------------------------------*/
+  
+  .compare {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    --handle-size: 32px;
+    --mask-width: 50%;
+    overflow: hidden;
+  }
+  
+  .compare__img {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .compare__img--after {
+    mask-image: linear-gradient(to right, black var(--mask-width), transparent 0%);
+    -webkit-mask-image: linear-gradient(to right, black var(--mask-width), transparent 0%);
+  }
+  
+  .compare__input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: ew-resize;
+    opacity: 0.5;
+  }
+  
+  .compare__input::-webkit-slider-runnable-track {
+    height: 100%;
+  }
+  
+  .compare__input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 100%;
+    border-radius: 0;
+    width: var(--handle-size);
+    border: none;
+  }
+  
+  .compare__icon {
+    position: absolute;
+    z-index: 2;
+    color: #333;
+    width: var(--handle-size);
+    height: var(--handle-size);
+    top: 50%;
+    left: var(--mask-width);
+    transform: translate(-50%, -50%);
+    padding: 6px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .compare__icon path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+  }
+
+  .clip-compare {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    height: 240px;
+    overflow: hidden;
+    margin: 1.5em auto;
+    /* 去掉这两个 ↓↓↓ */
+    /* border: 2px solid white; */
+    /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.2); */
+    background: black; /* 如果背景太亮，可以加一层黑底衬托图片 */
+  }
+  
+  
+  .clip-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;  /* ← 这很关键 */
+    background: black;
+  }
+  
+  
+  .clip-img.after {
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.1s linear;
+    z-index: 2;
+  }
+  
+  .clip-slider {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    cursor: ew-resize;
+  }
+
+
+  /* ----------------------------------------固定停止-----------*/
+  .step.step-ending {
+    min-height: 100vh !important;
+    height: 100vh;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .not-a-step {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #Ending {
+    margin-bottom: 50vh; /* 你可以调成 30vh、40vh 看效果 */
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+
+  /* ----------------------------------------黑色模式---------------------------------------------*/
+  .step-dark {
+    background-color: transparent !important;
+    color: white ;
+    box-shadow: none !important;
+  }
+  
+  .step-dark * {
+    color: white ;
+    background: transparent !important;
+  }
+
+  .step-dark div {
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  
+  .step-dark.lefty {
+    width: 38vw;            /* 更窄的宽度 */
+    margin-left: 7vw;      /* 可根据需要调整偏移 */
+  }
+  
+  
+
+
+  /* ----------------------------------------左右分列---------------------------------------------*/
+  .comparison-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+  }
+  
+  .comparison-left {
+    width: 40%;
+    position: sticky;
+    top: 15vh; /* 滚到屏幕15%高度时固定 */
+    align-self: flex-start;
+  }
+  
+  .comparison-left img {
+    width: 90%;
+    margin: 2em auto;
+    display: block;
+  }
+  
+  .comparison-right {
+    flex: 1;
+    padding: 2em;
+  }
+  
+
+
+  a,
+  a:hover,
+  a:visited {
+    color: #6c6c6c;  /*所有链接默认、鼠标悬停、访问过的颜色统一设为灰色  */
+  }
+  
+  .hidden {
+    visibility: hidden;  /*设置为不可见但仍占空间  */
+  }
+  .centered {  /*内容宽度为视口宽度的 50%，并居中对齐。  */
+    width: 45vw;
+    margin: 0 auto;
+  }
+  .lefty {
+    width: 45vw;
+    margin-left: 6vw;
+  }
+  .righty {
+    width: 33vw;
+    margin-left: 62vw;
+  }
+  .fully {  /*完整占满整行，居中。 */
+    width: 100%;
+    margin: auto;
+  }
+  .light {
+    color: #000000;
+    background-color: #ffffff;
+  }
+  .dark {
+    color: #fafafa;
+    background-color: #000000;
+  }
+  .step {  /*滚动隐藏 */
+    padding-bottom: 55vh;
+    opacity: 0.15;
+  }
+  .step.active {  /*滚动完全显示 */
+    opacity: 0.99;
+  }
+  .step div {  /*滚动块内部格式 */
+    padding: 5px 30px;
+    line-height: 25px;
+    font-size: 13px;
+    background-color: white;
+    z-index: 3;
+    box-shadow: 0 2px 8px rgb(214, 214, 214);
+  }
+  .step img {
+    width: 100%;
+  }
+
+  .step-tight { /*调整特定 step 的滚动灵敏度*/
+    height: 10vh;
+    margin-bottom: 1vh;
+  }
+
+  
+  @media (max-width: 750px) {  /*响应式设置（针对小屏设备*/
+    .centered,
+    .lefty,
+    .righty,
+    .fully {
+      width: 90vw;
+      margin: 0 auto;
+    }
+  }
+  /* Fix issue on mobile browser where scroll breaks  */
+  .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan,
+  .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan
+    .mapboxgl-canvas {
+    touch-action: unset;
+  }
