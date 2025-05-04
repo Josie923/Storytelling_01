@@ -716,30 +716,46 @@ map.addSource('prince8-image', {
       offset: 0.7,
       progress: true,
     })
+//--------------------------------------------修改解决图片放大显示不全的问题------------------------------
     .onStepEnter(async (response) => {
       var current_chapter = config.chapters.findIndex(
         (chap) => chap.id === response.element.id
       );
       var chapter = config.chapters[current_chapter];
-
-
-      
-      
-      
-      
-
+    
       response.element.classList.add("active");
-      map[chapter.mapAnimation || "flyTo"](chapter.location);
-
+    
+      // 如果是图片显示异常的章节，先resize再flyTo
+      const buggedChapters = [
+        "overallMap5",
+        "overallMap500",
+        "overallMap501",
+        "overallMap502",
+        "overallMap503"
+      ];
+    
+      if (buggedChapters.includes(chapter.id)) {
+        map.resize();
+        map.setZoom(chapter.location.zoom - 0.01); // zoom out 一点触发刷新
+        setTimeout(() => {
+          map[chapter.mapAnimation || "flyTo"](chapter.location);
+        }, 100);
+      } else {
+        map[chapter.mapAnimation || "flyTo"](chapter.location);
+      }
+    
       if (config.showMarkers) {
         marker.setLngLat(chapter.location.center);
       }
+    
       if (chapter.onChapterEnter.length > 0) {
         chapter.onChapterEnter.forEach(setLayerOpacity);
       }
+    
       if (chapter.callback) {
         window[chapter.callback]();
       }
+    
       if (chapter.rotateAnimation) {
         map.once("moveend", () => {
           const rotateNumber = map.getBearing();
@@ -751,6 +767,7 @@ map.addSource('prince8-image', {
           });
         });
       }
+    
       if (config.auto) {
         var next_chapter = (current_chapter + 1) % config.chapters.length;
         map.once("moveend", () => {
@@ -762,6 +779,7 @@ map.addSource('prince8-image', {
         });
       }
     })
+    
     
     /*------------重新显示图片-------------*/
     .onStepExit((response) => {
